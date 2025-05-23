@@ -7,15 +7,15 @@
   "type": "commonjs",
   "scripts": {
     "test": "jest",
-    "start": "parcel",
+    "start": "parcel public/index.html",
     "build": "parcel build"
   },
   "devDependencies": {
     "parcel": "^2.15.1"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  }
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
 }
