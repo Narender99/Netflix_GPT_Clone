@@ -2,7 +2,8 @@ Netflix clone integrated with GPT
 
 1. Created folder structure from strach & included parcel bundler
 2. configured tailwind css
-
+3. Header Component
+4. login form
 
 # features
 
