@@ -1,11 +1,21 @@
-import React, {useState} from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { validator } from "../utils/validator";
 
 const Login = () => {
   const [isSignInFormEnabled, setIsSignInFormEnabled] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const handleSignInForm = () => {
     setIsSignInFormEnabled(!isSignInFormEnabled);
+  };
+
+  const handleButtonClicked = () => {
+    const message = validator(email.current?.value, password.current?.value, name.current?.value)
+    setErrorMessage(message); 
   };
 
   return (
@@ -17,28 +27,39 @@ const Login = () => {
           alt="Netflix Background Image"
         />
       </div>
-      <form className="absolute bg-black w-3/12 p-12 my-36 mx-auto right-0 left-0 text-white bg-opacity-90 rounded-lg">
+      <form
+        className="absolute bg-black w-3/12 p-12 my-36 mx-auto right-0 left-0 text-white bg-opacity-90 rounded-lg"
+        onClick={(e) => e.preventDefault()}
+      >
         <h1 className="font-bold text-4xl">
           {isSignInFormEnabled ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInFormEnabled && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-800 rounded-lg border-white"
           ></input>
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-4 my-4 w-full bg-gray-800 rounded-lg border-white"
         ></input>
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-800 rounded-lg border-white"
         ></input>
-        <button className="p-4 my-4 bg-red-700 w-full rounded-lg">
+        {errorMessage && (
+          <p className="text-red-500 font-bold p-2">
+            {errorMessage}
+          </p>
+        )}
+        <button className="p-4 my-4 bg-red-700 w-full rounded-lg" onClick={handleButtonClicked}>
           {isSignInFormEnabled ? "Sign In" : "Sign Up"}
         </button>
         <p className="p-2 my-2 cursor-pointer" onClick={handleSignInForm}>
