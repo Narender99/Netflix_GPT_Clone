@@ -4,6 +4,11 @@ Netflix clone integrated with GPT
 2. configured tailwind css
 3. Header Component
 4. login form
+5. useRef hook
+6. form validation
+7. Registered App On firebase
+8. deployed and hosted on firebase
+
 
 # features
 
