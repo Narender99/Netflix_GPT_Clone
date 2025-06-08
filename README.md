@@ -8,6 +8,12 @@ Netflix clone integrated with GPT
 6. form validation
 7. Registered App On firebase
 8. deployed and hosted on firebase
+9. Sign in / Sign Up (need to add using firebase)
+10. onAuthStateChanged code (need to add using firebase)
+11. login / signup using usenavaigate and route to browse page
+12. use Redux create user slice add sign out in home page with Profile photo
+13. create constant file and add urls
+
 
 
 # features

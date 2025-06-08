@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { validator } from "../utils/validator";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [isSignInFormEnabled, setIsSignInFormEnabled] = useState(true);
@@ -14,8 +16,36 @@ const Login = () => {
   };
 
   const handleButtonClicked = () => {
-    const message = validator(email.current?.value, password.current?.value, name.current?.value)
-    setErrorMessage(message); 
+    const message = validator(
+      email.current?.value,
+      password.current?.value,
+      name.current?.value
+    );
+    setErrorMessage(message);
+
+    if (!isSignInFormEnabled) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current?.value,
+        password.current?.value
+      )
+        .then((userCredential) => {
+          console.log("User created successfully:", userCredential);
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
+    } else {
+      signInWithEmailAndPassword(auth, email.current?.value,
+        password.current?.value)
+        .then((userCredential) => {
+          console.log("User signed in successfully:", userCredential);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+    }
   };
 
   return (
@@ -55,11 +85,12 @@ const Login = () => {
           className="p-4 my-4 w-full bg-gray-800 rounded-lg border-white"
         ></input>
         {errorMessage && (
-          <p className="text-red-500 font-bold p-2">
-            {errorMessage}
-          </p>
+          <p className="text-red-500 font-bold p-2">{errorMessage}</p>
         )}
-        <button className="p-4 my-4 bg-red-700 w-full rounded-lg" onClick={handleButtonClicked}>
+        <button
+          className="p-4 my-4 bg-red-700 w-full rounded-lg"
+          onClick={handleButtonClicked}
+        >
           {isSignInFormEnabled ? "Sign In" : "Sign Up"}
         </button>
         <p className="p-2 my-2 cursor-pointer" onClick={handleSignInForm}>
