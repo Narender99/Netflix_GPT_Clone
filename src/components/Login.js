@@ -3,8 +3,11 @@ import Header from "./Header";
 import { validator } from "../utils/validator";
 import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [isSignInFormEnabled, setIsSignInFormEnabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const name = useRef(null);
@@ -30,6 +33,8 @@ const Login = () => {
         password.current?.value
       )
         .then((userCredential) => {
+          dispatch(addUser( userCredential?.user,
+          ));
           console.log("User created successfully:", userCredential);
         })
         .catch((error) => {
@@ -42,8 +47,7 @@ const Login = () => {
           console.log("User signed in successfully:", userCredential);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+          setErrorMessage(error.message);
         });
     }
   };
